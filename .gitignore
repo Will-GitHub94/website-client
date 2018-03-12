@@ -21,4 +21,3 @@ selenium-debug.log
 # Environment variables
 config/dev.env.js
 config/prod.env.js
-config/test.env.js
