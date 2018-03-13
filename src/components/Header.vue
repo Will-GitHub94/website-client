@@ -4,7 +4,6 @@
 			<img id="profile-pic" src="../assets/brand/profile-picture/503x503.jpg"/>
 			<h1>{{ author }}</h1>
 			<h2>{{ role }}</h2>
-			<h6>{{ pageTitle }}</h6>
 		</b-jumbotron>
 		<b-nav id="main-nav">
 			<b-nav-item>
@@ -15,13 +14,16 @@
 			</b-nav-item>
 			<b-nav-item>
 				<router-link to="/">
-					<img id="logo" src="../assets/brand/logo/310x400.png"/>
+					<b-img src="../assets/brand/logo/310x400.png"/>
 				</router-link>
 			</b-nav-item>
 			<b-nav-item>
 				<router-link to="/knowledge">Knowledge</router-link>
 			</b-nav-item>
 		</b-nav>
+		<div>
+			<h1>{{ pageTitle }}</h1>
+		</div>
 	</header>
 </template>
 
@@ -49,8 +51,5 @@
 	#profile-pic {
 		border-radius: 50%;
 		box-shadow: 0 0 5px 6px #ccc;
-	}
-	#logo {
-		height: 100px;
 	}
 </style>
