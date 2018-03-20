@@ -1,7 +1,7 @@
 import Api from "@/services/Api";
 
 export default {
-	getTree() {
-		return Api().get("recursiveTree");
+	getArchitecture() {
+		return Api().get("/github/architecture");
 	},
 };
