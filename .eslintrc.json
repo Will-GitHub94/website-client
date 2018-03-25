@@ -27,7 +27,6 @@
 			"vue": "never"
 		}],
 		"vue/html-indent": ["error", "tab"],
-		"indent": "off",
 		"no-tabs": 0,
 		"no-param-reassign": ["error", {
 			"props": true,
@@ -41,8 +40,13 @@
 			"optionalDependencies": ["test/unit/index.js"]
 		}],
 		"quotes": ["error", "double"],
+		"indent": "off",
 		"vue/script-indent": ["error", "tab", {
-			"baseIndent": 1
+			"baseIndent": 1,
+			"switchCase": 1,
+			"ignores": [
+				"beforeCreate"
+			]
 		}],
 		"no-console": "off",
 		"arrow-body-style": ["error", "always"]
