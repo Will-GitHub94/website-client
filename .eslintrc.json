@@ -43,11 +43,10 @@
 		"indent": "off",
 		"vue/script-indent": ["error", "tab", {
 			"baseIndent": 1,
-			"switchCase": 1,
-			"ignores": [
-				"beforeCreate"
-			]
+			"switchCase": 1
 		}],
+		"object-shorthand": "off",
+		"func-names": "off",
 		"no-console": "off",
 		"arrow-body-style": ["error", "always"]
 	}

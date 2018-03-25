@@ -1,9 +1,12 @@
+import Vue from "vue";
 import Vuex from "vuex";
 import showdown from "showdown";
 
-import Api from "../services/Api";
+import GitHubApi from "../services/github";
 
 const converter = new showdown.Converter();
+
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
@@ -11,7 +14,7 @@ const store = new Vuex.Store({
 	},
 	actions: {
 		getReadme({ commit }) {
-			Api().get("/")
+			GitHubApi.getREADME()
 				.then((resp) => {
 					commit("addReadme", {
 						readme: resp,
@@ -24,14 +27,14 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 		addReadme(state, { readme }) {
-			state.readme = readme;
+			const decodedReadme = atob(readme);
+
+			state.readme = converter.makeHtml(decodedReadme);
 		},
 	},
 	getters: {
-		getReadme: (state) => {
-			const decodedReadme = atob(state.readme);
-
-				return converter.makeHtml(decodedReadme);
+		useReadme: (state) => {
+			return state.readme;
 		},
 	},
 	modules: {},
