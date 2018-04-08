@@ -7,6 +7,7 @@
 
 <script>
 	import { mapState } from "vuex";
+	import forEach from "lodash/forEach";
 	import Header from "./Header";
 
 	export default {
@@ -17,8 +18,30 @@
 		computed: mapState([
 			"readme",
 		]),
+		methods: {
+			changeLinks: function () {
+				const dom = this.$el;
+				const knowledgeSections = [
+					"architecture",
+					"networking",
+					"machine_learning",
+					"cryptography",
+				];
+				let link;
+
+				forEach(knowledgeSections, (section) => {
+					link = dom.querySelector(`a[href='${section}/'`);
+					link.setAttribute("href", `#/${section}`);
+				});
+			},
+		},
 		mounted: function () {
 			this.$store.dispatch("getReadme");
+		},
+		updated: function () {
+			this.$nextTick(function () {
+				this.changeLinks();
+			});
 		},
 	};
 </script>
