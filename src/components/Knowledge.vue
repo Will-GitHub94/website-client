@@ -35,9 +35,6 @@
 				});
 			},
 		},
-		mounted: function () {
-			this.$store.dispatch("getReadme");
-		},
 		updated: function () {
 			this.$nextTick(function () {
 				this.changeLinks();

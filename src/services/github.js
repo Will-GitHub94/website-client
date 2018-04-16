@@ -2,7 +2,7 @@ import Api from "@/services/Api";
 
 export default {
 	getREADME() {
-		return Api().get("/knowledge")
+		return Api().get("/github/knowledge")
 			.then((resp) => {
 				return resp.data;
 			})
@@ -11,11 +11,8 @@ export default {
 		});
 	},
 	getArchitecture() {
-		console.log("\n===== getArchitecture =====");
 		return Api().get("/github/knowledge/architecture")
 			.then((resp) => {
-				console.log("::: resp.data :::");
-				console.log(resp.data);
 				return resp.data;
 			})
 			.catch((err) => {

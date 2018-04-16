@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import VuexPersistence from "vuex-persist";
 import showdown from "showdown";
 import forEach from "lodash/forEach";
 
@@ -46,20 +47,14 @@ const store = new Vuex.Store({
 			});
 		},
 		async getKnowledgeSection({ commit }, section) {
-			console.log("\n===== getKnowledgeSection =====");
-			console.log(`::: section: ${section}`);
 			await GitHubApi[`get${section}`]()
 				.then((resp) => {
-					console.log("::: resp :::");
-					console.log(resp);
-					console.log("::: paths :::");
-					console.log(resp.paths);
 					commit("addKnowledgeSection", {
 						section: (section !== "MachineLearning") ? section.toLowerCase() : "machineLearning",
 						knowledgeSection: {
-							img: resp.img.contents,
-							md: resp.md.contents,
-							paths: resp.paths.contents,
+							img: (resp.img) ? resp.img.contents : [],
+							md: (resp.md) ? resp.md.contents : [],
+							paths: resp.paths || [],
 						},
 					});
 				})
@@ -82,14 +77,11 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 		addReadme(state, payload) {
-			console.log("\n===== addReadme =====");
-			console.log(`::: readme: ${payload.readme}`);
 			const decodedReadme = atob(payload.readme);
 
 			state.readme = converter.makeHtml(decodedReadme);
 		},
 		addKnowledgeSection(state, payload) {
-			console.log(`::: sectionName: ${payload.section}`);
 			const decodedMarkdowns = [];
 			const decodedImages = [];
 
@@ -106,7 +98,7 @@ const store = new Vuex.Store({
 		},
 	},
 	getters: {
-		getArchitecutePaths: (state) => {
+		getArchitecturePaths: (state) => {
 			return state.architecture.paths;
 		},
 		getNetworkingPaths: (state) => {
@@ -123,6 +115,11 @@ const store = new Vuex.Store({
 		},
 	},
 	modules: {},
+	plugins: [
+		(new VuexPersistence({
+			storage: window.localStorage,
+		})).plugin,
+	],
 });
 
 export default store;
