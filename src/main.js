@@ -8,7 +8,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 import App from "./App";
 import store from "./store/index";
-import router from "./router";
+import vueRouter from "./router/index";
 
 Vue.use(BootstrapVue);
 Vue.use(Router);
@@ -46,12 +46,12 @@ Vue.config.productionTip = false;
 		cryptographyPaths,
 		machineLearningPaths,
 	};
-	const vueRouter = new Router(await router.addKnowledgeRoutes(knowledgePaths));
+	const router = new Router(await vueRouter.addKnowledgeRoutes(knowledgePaths));
 
 	/* eslint-disable no-new */
 	new Vue({
 		el: "#app",
-		vueRouter,
+		router,
 		store,
 		components: { App },
 		template: "<App/>",

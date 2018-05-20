@@ -2,6 +2,7 @@ import Vue from "vue";
 import forOwn from "lodash/forOwn";
 import forEach from "lodash/forEach";
 import find from "lodash/find";
+import values from "lodash/values";
 
 import Home from "@/components/Home";
 import AboutMe from "@/components/AboutMe";
@@ -85,7 +86,7 @@ const addKnowledgeRoutes = async (allKnowledgeSectionPaths) => {
 	const knowledgeRoute = find(router.routes, (route) => {
 		return route.name === "Knowledge";
 	});
-	const knowledgeTree = {};
+	const knowledgeTreeChildren = [];
 
 	let knowledgeSectionType;
 	let knowledgeSectionBaseRoute;
@@ -121,9 +122,9 @@ const addKnowledgeRoutes = async (allKnowledgeSectionPaths) => {
 				}
 			});
 		});
-		knowledgeTree[knowledgeSectionType] = knowledgeSectionBaseRoute;
+		knowledgeTreeChildren.push(knowledgeSectionBaseRoute);
 	});
-	router.routes.children = knowledgeTree;
+	knowledgeRoute.children = knowledgeTreeChildren;
 	return router;
 };
 
