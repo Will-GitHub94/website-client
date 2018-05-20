@@ -81,11 +81,25 @@ const getNewKnowledgeSectionChildRoute = (pathComponent, arrOfPathComponents) =>
 	};
 };
 
-// TODO: Refactoring
-const addKnowledgeRoutes = async (allKnowledgeSectionPaths) => {
-	const knowledgeRoute = find(router.routes, (route) => {
+const getKnowledgeRoute = (routes) => {
+	return find(routes, (route) => {
 		return route.name === "Knowledge";
 	});
+};
+
+const getKnowledgeSectionBaseRoute = (children, sectionType) => {
+	return find(children, (child) => {
+		return child.path === `/${sectionType}`;
+	});
+};
+
+const getSectionType = (path) => {
+	return path.substring(0, path.indexOf("/"))
+};
+
+// TODO: Refactoring
+const addKnowledgeRoutes = async (allKnowledgeSectionPaths) => {
+	const knowledgeRoute = getKnowledgeRoute(router.routes);
 	const knowledgeTreeChildren = [];
 
 	let knowledgeSectionType;
@@ -97,11 +111,10 @@ const addKnowledgeRoutes = async (allKnowledgeSectionPaths) => {
 
 	forOwn(allKnowledgeSectionPaths, (singleKnowledgeSectionPaths) => {
 		forEach(singleKnowledgeSectionPaths, (fullPath) => {
-			knowledgeSectionType = fullPath.substring(0, fullPath.indexOf("/"));
+			knowledgeSectionType = getSectionType(fullPath);
 			fullPathSplit = fullPath.split("/");
-			knowledgeSectionBaseRoute = find(knowledgeRoute.children, (child) => {
-				return child.path === `/${knowledgeSectionType}`;
-			});
+			knowledgeSectionBaseRoute = getKnowledgeSectionBaseRoute(knowledgeRoute.children, knowledgeSectionType);
+
 			// 1st previous route is ALWAYS the base knowledge type (i.e. 'architecture')
 			previousKnowledgeSectionChildRoute = knowledgeSectionBaseRoute;
 
